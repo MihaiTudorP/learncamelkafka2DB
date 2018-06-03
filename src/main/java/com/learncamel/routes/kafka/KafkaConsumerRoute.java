@@ -16,12 +16,12 @@ public class KafkaConsumerRoute extends RouteBuilder {
                     .process(new ExceptionProcessor())
                 .end()
                 .log("Received message from broker: ${body}")
-                .to("direct:readFromKafka")
+                //.to("direct:readFromKafka")
                 .process(new InsertProcessor())
                 .to("jdbc:PGDataSource")
                 .to("sql:select * from message order by create_date desc limit 1?dataSource=PGDataSource")
                 .to("log:level=INFO&showBody=true")
-                .to("direct:output")
+                //.to("direct:output")
         .end();
     }
 }
